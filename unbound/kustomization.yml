@@ -1,0 +1,7 @@
+namespace: dns
+resources:
+  - base/unbound/dns-namespace.yml
+  - base/unbound/unbound-deployment.yml
+  - base/unbound/unbound-service.yml
+patches:
+  - patches/resource_limits.yml

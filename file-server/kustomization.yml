@@ -1,0 +1,5 @@
+namespace: file-server
+resources:
+  - base/file-server/file-server-namespace.yml
+  - base/file-server/file-server-deployment.yml
+  - base/file-server/file-server-service.yml

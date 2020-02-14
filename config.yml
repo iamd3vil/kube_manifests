@@ -1,0 +1,40 @@
+workloads:
+  # Unbound
+  - name: unbound
+    deployments:
+      - name: unbound
+        replicas: 1
+        labels:
+          - name: 'service: unbound'
+        containers:
+          - name: unbound
+            image: 'secns/unbound:1.9.6'
+            portInt: 53
+            portName: unbound-port
+    services:
+      - name: unbound
+        type: ClusterIP
+        port: 53
+        targetPort: 53
+        labels:
+          - name: 'service: app'
+        selectors:
+          - name: 'service: unbound'
+
+    # # Adguard Home
+    # - name: adguard
+    #   deployments:
+    #     - name: adguard
+    #       replicas: 1
+    #       labels:
+    #         - name: 'service: adguard'
+    #       containers:
+    #         - name: adguard
+    #           image: 'adguard/adguardhome'
+          
+    #   services:
+    #     - name: adguard
+    #       type: NodePort
+    #       port: 53
+    #       targetPort: 53
+    #       nodePort: 

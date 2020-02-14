@@ -1,0 +1,5 @@
+namespace: gitea
+resources:
+  - base/gitea/gitea-namespace.yml
+  - base/gitea/gitea-deployment.yml
+  - base/gitea/gitea-service.yml

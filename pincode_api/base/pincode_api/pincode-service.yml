@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pincode-api
+  labels:
+    service: pincode-api
+spec:
+  ports:
+    - name: tcp
+      port: 8080
+      targetPort: 8080
+      nodePort: 30002
+      protocol: TCP
+  type: NodePort
+  selector:
+    service: pincode-api

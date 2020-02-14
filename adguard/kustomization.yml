@@ -1,0 +1,8 @@
+namespace: dns
+resources:
+  - base/adguard/adguard-deployment.yml
+  - base/adguard/adguard-service.yml
+configMapGenerator:
+  - name: adguardconfig
+    files:
+      - AdGuardHome.yaml=configs/AdGuardHome.yml

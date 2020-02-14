@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-server
+  labels:
+    service: file-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: file-server
+  template:
+    metadata:
+      labels:
+        service: file-server
+    spec:
+      containers:
+        - name: file-server
+          image: "codeskyblue/gohttpserver:latest"
+          command: ["/app/gohttpserver"]
+          args: ["--root=/app/public", "--upload", "--xheaders"]
+          ports:
+            - containerPort: 8000
+              name: file-server-web
+          volumeMounts:
+            - name: data
+              mountPath: "/app/public"
+            - name: timezone
+              mountPath: "/etc/timezone"
+            - name: localtime
+              mountPath: "/etc/localtime"
+      nodeSelector:
+        file-server: "true"
+      volumes:
+        - name: data
+          hostPath:
+            path: "/root/file-server/"
+            type: DirectoryOrCreate
+        - name: timezone
+          hostPath:
+            path: /etc/timezone
+            type: File
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File

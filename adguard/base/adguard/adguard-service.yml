@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-web
+  labels:
+    service: adguard
+spec:
+  ports:
+    - name: tcp
+      port: 3000
+      targetPort: 3000
+      nodePort: 30001
+      protocol: TCP
+  type: NodePort
+  selector:
+    service: adguard
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-dns
+  labels:
+    service: adguard
+spec:
+  ports:
+    - name: tcp
+      port: 53
+      targetPort: 53
+      nodePort: 30101
+      protocol: TCP
+    - name: udp
+      port: 53
+      targetPort: 53
+      nodePort: 30100
+      protocol: UDP
+  type: NodePort
+  selector:
+    service: adguard

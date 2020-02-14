@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unbound
+  labels:
+    service: unbound
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: unbound
+  template:
+    metadata:
+      labels:
+        service: unbound
+    spec:
+      containers:
+        - name: unbound
+          image: secns/unbound:1.9.6
+          ports:
+          - containerPort: 53
+            name: unbound-port

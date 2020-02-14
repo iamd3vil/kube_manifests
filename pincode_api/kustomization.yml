@@ -1,0 +1,5 @@
+namespace: pincode
+resources:
+  - base/pincode_api/pincode-deployment.yml
+  - base/pincode_api/pincode-service.yml
+  - base/pincode_api/pincode-namespace.yml

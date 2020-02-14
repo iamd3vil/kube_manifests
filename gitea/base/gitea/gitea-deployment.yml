@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea
+  labels:
+    service: gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: gitea
+  template:
+    metadata:
+      labels:
+        service: gitea
+    spec:
+      containers:
+        - name: gitea
+          image: "gitea/gitea:1.11.0"
+          ports:
+            - containerPort: 3000
+              name: gitea-web
+            - containerPort: 22
+              name: gitea-ssh
+          env:
+            - name: USER_UID
+              value: "1000"
+            - name: USER_GID
+              value: "1000"
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
+            - name: timezone
+              mountPath: "/etc/timezone"
+            - name: localtime
+              mountPath: "/etc/localtime"
+      nodeSelector:
+        service: gitea
+      volumes:
+        - name: data
+          hostPath:
+            path: "/mnt/gitea"
+            type: Directory
+        - name: timezone
+          hostPath:
+            path: /etc/timezone
+            type: File
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File

@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pincode-api
+  labels:
+    service: pincode-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: pincode-api
+  template:
+    metadata:
+      labels:
+        service: pincode-api
+    spec:
+      containers:
+        - name: pincode-api
+          image: registry.gitlab.com/saratchandra/pincode_api:v1.0
+          ports:
+            - containerPort: 8080
+              name: pincode-api
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: pincode-api
+            failureThreshold: 2
+            periodSeconds: 10
+      imagePullSecrets:
+      - name: regcred

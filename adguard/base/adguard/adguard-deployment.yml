@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard
+  labels:
+    service: adguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: adguard
+  template:
+    metadata:
+      labels:
+        service: adguard
+    spec:
+      containers:
+        - name: adguard
+          image: adguard/adguardhome:latest
+          ports:
+            - containerPort: 53
+              name: adguard-dns
+            - containerPort: 3000
+              name: adguard-web
+          volumeMounts:
+          - name: config-volume
+            mountPath: "/opt/adguardhome/conf/"
+      initContainers:
+        - name: init-adguard
+          image: alpine:latest
+          command: [
+            "sh",
+            "-c",
+            "cp /config/AdGuardHome.yaml /app"
+          ]
+          volumeMounts:
+          - name: tmp-config-volume
+            mountPath: "/config"
+          - name: config-volume
+            mountPath: "/app"
+
+      nodeSelector:
+        dns: "true"
+          
+      volumes:
+        - name: tmp-config-volume
+          configMap:
+            name: adguardconfig
+        - name: config-volume
+          emptyDir: {}
