@@ -1,0 +1,7 @@
+namespace: myip
+resources:
+  - base/myip/myip-deployment.yml
+  - base/myip/myip-service.yml
+  - base/myip/myip-namespace.yml
+patches:
+  - patches/resource-limits.yml

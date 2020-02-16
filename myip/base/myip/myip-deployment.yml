@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myip
+  labels:
+    service: myip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: myip
+  template:
+    metadata:
+      labels:
+        service: myip
+    spec:
+      containers:
+        - name: myip
+          image: registry.gitlab.com/saratchandra/myip_go:v1.0
+          ports:
+            - containerPort: 8080
+              name: myip
+      nodeSelector:
+        myip: "true"
+      imagePullSecrets:
+      - name: regcred
