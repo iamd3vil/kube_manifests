@@ -7,3 +7,7 @@ deploy-adguard:
 deploy-myip:
 	kubectl apply -f myip/base/myip/myip-namespace.yml
 	kustomize build myip | kubectl apply -f -
+
+deploy-pincode:
+	kubectl apply -f pincode_api/base/pincode_api/pincode-namespace.yml
+	kustomize build pincode_api | kubectl -n pincode apply -f -

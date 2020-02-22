@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pincode-api
-          image: registry.gitlab.com/saratchandra/pincode_api:v1.0
+          image: registry.gitlab.com/saratchandra/pincode_api:v1.2
           ports:
             - containerPort: 8080
               name: pincode-api
@@ -27,5 +27,7 @@ spec:
               port: pincode-api
             failureThreshold: 2
             periodSeconds: 10
+      nodeSelector:
+        pincode: "true"
       imagePullSecrets:
       - name: regcred
