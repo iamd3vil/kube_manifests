@@ -11,3 +11,8 @@ deploy-myip:
 deploy-pincode:
 	kubectl apply -f pincode_api/base/pincode_api/pincode-namespace.yml
 	kustomize build pincode_api | kubectl -n pincode apply -f -
+
+deploy-gitea:
+	kubectl apply -f gitea/base/gitea/gitea-namespace.yml
+	kustomize build gitea | kubectl -n gitea apply -f -
+	
